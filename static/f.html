@@ -1,0 +1,65 @@
+<html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vue-router/3.1.3/vue-router.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div id="thread_list">
+            <ul id="thread_list" class="threadlist_bright j_threadlist_bright">
+                <li class=" j_thread_list clearfix" v-for="item in threads">
+                    <div class="t_con cleafix">
+                        <div class="col2_left j_threadlist_li_left">
+                            <span class="threadlist_rep_num center_text" title="回复">{{item.reply}}</span>
+                        </div>
+                        <div class="threadlist_lz clearfix">
+                            <div class="threadlist_title pull_left j_th_tit ">
+                                <i v-if="item.good" class="icon-good" alt="精品" title="精品">[精]</i>
+                                <a rel="noreferrer" v-bind:href="'/p?kz=' + item.kz + '&kw=' + q.kw" v-bind:title="item.title"
+                                    target="_blank" class="j_th_tit ">{{item.title}}</a>
+                            </div>
+                            <div class="threadlist_author pull_right">
+                                <span class="tb_icon_author " v-bind:title="'主题作者： ' + item.author_nickname">
+                                    <i class="icon_author">作者：</i>
+                                    <span class="frs-author-name-wrap">
+                                        <a rel="noreferrer" target="_blank">{{item.author_nickname}}</a>
+                                    </span>
+                                </span>
+                            </div>
+                            <span class="pull-right is_show_create_time" title="创建时间">{{item.first.create_date}}</span>
+                        </div>
+                        <div class="threadlist_detail clearfix">
+                            <div class="threadlist_text pull_left">
+                                <div class="threadlist_abs threadlist_abs_onlyline ">
+                                    {{item.first.content.content.substring(4,50)}}...</div>
+                            </div>
+                            <div class="threadlist_author pull_right">
+                                <span class="tb_icon_author_rely j_replyer" v-bind:title="'最后回复人: ' + item.last.un">
+                                    <a rel="noreferrer" class="frs-author-name j_user_card "
+                                        v-bind:href="'https://tieba.baidu.com/home/main/?un=' + item.last.un"
+                                        target="_blank">{{item.last.un}}</a></span>
+                                <span class="threadlist_reply_date pull_right j_reply_data"
+                                    title="最后回复时间">{{item.last.create_date}}</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="thread_list_bottom clearfix">
+            <div id="frs_list_pager" class="pagination-default clearfix">
+                <a v-bind:href="pageList.firstPage" class="first pagination-item ">首页</a>
+                <a v-bind:href="pageList.lastPage" class="pre pagination-item ">上一页</a>
+                <a  v-for="page in pageList.sidePages" v-bind:href="page.url" class=" pagination-item ">{{page.page}}</a>
+                <a v-bind:href="pageList.nextPage" class="next pagination-item ">下一页</a>
+                <!-- <a href="//tieba.baidu.com/f?kw=%E6%9F%AF%E5%93%80&amp;ie=utf-8&amp;pn=53950"class="last pagination-item ">尾页</a> -->
+            </div>
+        </div>
+    </div>
+    <script src="js/f.js"></script>
+</body>
+
+</html>

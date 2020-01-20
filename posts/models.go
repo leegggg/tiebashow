@@ -47,6 +47,22 @@ func GetPostHeadersByParentAndFlrFlag(parent int64, flr bool, pn int64, nb int64
 	return postHeaders, err
 }
 
+// GetFirstPostHeaderByKz ...
+func GetFirstPostHeaderByKz(kz int64) (PostHeader, error) {
+	db := common.GetDB()
+	var header PostHeader
+	err := db.Where(&PostHeader{Parent: kz, Flr: false, Floor: 1}).First(&header).Error
+	return header, err
+}
+
+// GetLastPostHeaderByKz ...
+func GetLastPostHeaderByKz(kz int64) (PostHeader, error) {
+	db := common.GetDB()
+	var header PostHeader
+	err := db.Where(&PostHeader{Parent: kz, Flr: false}).Order("floor desc").First(&header).Error
+	return header, err
+}
+
 // Content ...
 type Content struct {
 	Cid     *string    `json:"cid" gorm:"primary_key"`
@@ -79,15 +95,15 @@ func GetNbPostFlr(pid string) (int64, error) {
 
 // AttachementHeader ...
 type AttachementHeader struct {
-    Downloaded      *time.Time   `json:"downloaded"`
-    Title           *string      `json:"title"`
-    Source          *string      `json:"source"`
-    Link            *string      `json:"link" gorm:"primary_key"`
-    Path            *string      `json:"path"`
-    Pid             *string      `json:"pid"`
-    ModDate         *time.Time   `json:"mod_date"`
-    Status          int64        `json:"status"`
-    Comment         *string      `json:"comment"` 
+	Downloaded *time.Time `json:"downloaded"`
+	Title      *string    `json:"title"`
+	Source     *string    `json:"source"`
+	Link       *string    `json:"link" gorm:"primary_key"`
+	Path       *string    `json:"path"`
+	Pid        *string    `json:"pid"`
+	ModDate    *time.Time `json:"mod_date"`
+	Status     int64      `json:"status"`
+	Comment    *string    `json:"comment"`
 }
 
 // TableName ...
@@ -95,19 +111,37 @@ func (AttachementHeader) TableName() string {
 	return "ATTACHEMENT_HEADER"
 }
 
-// GetAttachementHeadersByPid ...
-func GetAttachementHeadersByPid(pid int64, flr bool, pn int64, nb int64) ([]AttachementHeader, error) {
+// PostAttachement ...
+type PostAttachement struct {
+	Parent  int64      `json:"parent" gorm:"primary_key"`
+	Floor   int64      `json:"floor" gorm:"primary_key"`
+	Link    *string    `json:"link" gorm:"primary_key"`
+	AttID   *string    `json:"attId"`
+	Status  int64      `json:"status"`
+	Comment *string    `json:"comment"`
+	ModDate *time.Time `json:"mod_date"`
+}
+
+// TableName ...
+func (PostAttachement) TableName() string {
+	return "POST_ATTACHEMENT"
+}
+
+// GetAttachementHeadersByPostHeader ...
+func GetAttachementHeadersByPostHeader(post PostHeader) ([]AttachementHeader, error) {
 	db := common.GetDB()
 	var attachementHeaders []AttachementHeader
-	parent := strconv.FormatInt(pid,10)
-	err := db.Where(&AttachementHeader{Pid: &parent}).Find(&attachementHeaders).Error
+	err := db.Table("ATTACHEMENT_HEADER").
+		Joins("JOIN POST_ATTACHEMENT on (POST_ATTACHEMENT.attid = ATTACHEMENT_HEADER.link) ").
+		Where(&PostAttachement{Parent: post.Parent, Floor: post.Floor}).
+		Find(&attachementHeaders).Error
 	return attachementHeaders, err
 }
 
 // Post ...
 type Post struct {
 	PostHeader
-	Content      Content
-	NbFlr        int64
-	Attachements []string
+	Content      Content  `json:"content"`
+	NbFlr        int64    `json:"nb_flr"`
+	Attachements []string `json:"attachements"`
 }

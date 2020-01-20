@@ -15,7 +15,7 @@ func ThreadRegister(router *gin.RouterGroup) {
 
 func ThreadRetrieve(c *gin.Context) {
 	var err error
-	kw := c.DefaultQuery("kw", "")
+	kw := c.DefaultQuery("kw", "_")
 	pnParam := c.DefaultQuery("pn", "0")
 	nbParam := c.DefaultQuery("nb", "50")
 	tabParam := c.DefaultQuery("tab", "")
@@ -29,12 +29,8 @@ func ThreadRetrieve(c *gin.Context) {
 		return
 	}
 
-	var threads []ThreadHeader
-	if !good {
-		threads, err = GetThreadHeaders(kw, pn, nb)
-	} else {
-		threads, err = GetGoodThreadHeaders(kw, pn, nb)
-	}
+	var threads []Thread
+	threads, err = GetThreads(kw, pn, nb, good)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, common.NewError("thread", errors.New("DB Error")))

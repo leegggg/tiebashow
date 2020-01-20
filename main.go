@@ -1,6 +1,8 @@
 package main
 
 import (
+	"net/http"
+
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 
@@ -18,7 +20,12 @@ func main() {
 	defer db.Close()
 
 	r := gin.Default()
+	r.StaticFS("/js", http.Dir("./static/js/"))
+	r.StaticFS("/css", http.Dir("./static/css/"))
+	r.StaticFile("/f", "./static/f.html")
+	r.StaticFile("/p", "./static/p.html")
 
+	r.StaticFS("/img", http.Dir("./data/IMG/"))
 	v1 := r.Group("/api")
 	threads.ThreadRegister(v1.Group("/f"))
 	posts.PostRegister(v1.Group("/p"))

@@ -4,6 +4,7 @@ import (
 	"time"
 
 	"github.com/leegggg/tiebashow/common"
+	"github.com/leegggg/tiebashow/posts"
 )
 
 // ThreadHeader ...
@@ -43,8 +44,8 @@ func (ThreadHeader) TableName() string {
 func GetThreadHeaders(kw string, pn int64, nb int64) ([]ThreadHeader, error) {
 	db := common.GetDB()
 	var threadHeaders []ThreadHeader
-	err := db. //Where(&ThreadHeader{Kw: &kw}).
-			Order("top desc, kz desc").Limit(nb).Offset(pn).Find(&threadHeaders).Error
+	err := db.Where(&ThreadHeader{Kw: &kw}).
+		Order("top desc, kz desc").Limit(nb).Offset(pn).Find(&threadHeaders).Error
 	return threadHeaders, err
 }
 
@@ -72,4 +73,11 @@ func SearchThreadHeaders(kw string, pn int64, nb int64, query string) ([]ThreadH
 			Order("kz desc").Limit(nb).Offset(pn).Find(&threadHeaders).Error
 	}
 	return threadHeaders, err
+}
+
+// Thread ...
+type Thread struct {
+	ThreadHeader
+	First posts.Post `json:"first"`
+	Last  posts.Post `json:"last"`
 }
