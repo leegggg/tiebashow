@@ -2,9 +2,10 @@ package common
 
 import (
 	"fmt"
+	"os"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/sqlite"
-	"os"
 )
 
 type Database struct {
@@ -15,12 +16,12 @@ var DB *gorm.DB
 
 // Opening a database and save the reference to `Database` struct.
 func Init() *gorm.DB {
-	db, err := gorm.Open("sqlite3", "C:\\Users\\yizho\\tiebawap-get\\data\\all.柯哀.tieba.baidu.com.db")
+	db, err := gorm.Open("sqlite3", "./data/all.data.tieba.baidu.com.db")
 	if err != nil {
 		fmt.Println("db err: ", err)
 	}
 	db.DB().SetMaxIdleConns(10)
-	// db.LogMode(true)
+	db.LogMode(true)
 	DB = db
 	return DB
 }
