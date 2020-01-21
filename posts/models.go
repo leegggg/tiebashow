@@ -93,10 +93,11 @@ func GetContent(cid string) (Content, error) {
 }
 
 // GetNbPostFlr ...
+// Very Slow for now
 func GetNbPostFlr(pid string) (int64, error) {
-	db := common.GetDB()
 	parent, err := strconv.ParseInt(pid, 10, 64)
 	var count int64
+	db := common.GetDB()
 	db.Model(&PostHeader{}).Where(&PostHeader{Parent: parent, Flr: true}).Count(&count)
 	return count, err
 }

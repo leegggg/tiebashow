@@ -70,3 +70,19 @@ body {
     position: relative;
     border-bottom: 1px dotted #e4e6eb
 }
+
+.post-image{
+    /* width:100%; */
+    max-width:600px;
+}
+
+.post-tail-wrap .tail-info {
+    display: inline-block;
+    margin: 0 4px;
+    color: 
+    #999;
+}
+
+.maincontainer {
+    min-height:100rem;
+}

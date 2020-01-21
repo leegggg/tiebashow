@@ -24,7 +24,7 @@ func main() {
 	r.StaticFile("/f", "./static/f.html")
 	r.StaticFile("/p", "./static/p.html")
 
-	r.StaticFS("/img", http.Dir("./data/IMG/"))
+	r.StaticFS("/img", http.Dir("C:\\Users\\yizho\\tiebawap-get\\data\\柯哀IMG\\"))
 	v1 := r.Group("/api")
 	threads.ThreadRegister(v1.Group("/f"))
 	posts.PostRegister(v1.Group("/p"))

@@ -35,21 +35,20 @@
                                 id="post_content_128369238898" class="d_post_content j_d_post_content ">
                             </div>
                             <div v-for="img in post.attachements" class="post_Image">
-                                <img class="BDE_Image" v-bind:src="img" size="180558" changedsize="true" width="560"
-                                    height="569">
+                                <img class="BDE_Image post-image" v-bind:src="img" changedsize="true">
                             </div>
                         </div>
-                        <div class="core_reply j_lzl_wrapper">
-                            <div class="core_reply_tail clearfix">
-                                <div class="j_lzl_r p_reply">
+                        <div class="core_reply j_lzl_wrapper container">
+                            <div class="core_reply_tail clearfix float-right">
+                                <span class="j_lzl_r p_reply">
                                     <a rel="noopener"
                                         v-bind:href="'/p?flr=1&kz=' + post.pid + '&kw=' + q.kw + '&frm=' + post.parent"
-                                        class="lzl_link_unfold">回复({{post.nb_flr}})</a>
-                                </div>
-                                <div class="post-tail-wrap">
+                                        class="lzl_link_unfold">查看回复</a>
+                                </span>
+                                <span class="post-tail-wrap">
                                     <span class="tail-info">{{post.floor}}楼</span>
                                     <span class="tail-info">{{post.create_date}}</span>
-                                </div>
+                                </span>
                             </div>
                         </div>
                     </div>

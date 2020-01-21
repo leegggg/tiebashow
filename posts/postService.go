@@ -1,6 +1,8 @@
 package posts
 
-import "strconv"
+import (
+	"strconv"
+)
 
 // GetPostsByParentAndFlrFlag ...
 func GetPostsByParentAndFlrFlag(parent int64, flr bool, pn int64, nb int64) ([]Post, error) {
@@ -24,9 +26,10 @@ func GetPostByPostHeader(header PostHeader) (Post, error) {
 	if err == nil {
 		post.Content = content
 	}
-	nbFlr, err := GetNbPostFlr(*header.Pid)
+	// nbFlr, err := GetNbPostFlr(*header.Pid)
 	if err == nil {
-		post.NbFlr = nbFlr
+		//TODO: Not use this as for very slow
+		post.NbFlr = 0
 	}
 	urls, err := getAttachementUrlsByPost(post)
 	if err == nil {
