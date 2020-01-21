@@ -1,5 +1,7 @@
 package posts
 
+import "strconv"
+
 // GetPostsByParentAndFlrFlag ...
 func GetPostsByParentAndFlrFlag(parent int64, flr bool, pn int64, nb int64) ([]Post, error) {
 	postHeaders, err := GetPostHeadersByParentAndFlrFlag(parent, flr, pn, nb)
@@ -48,4 +50,9 @@ func getAttachementUrlsByPost(post Post) ([]string, error) {
 		}
 	}
 	return urls, err
+}
+
+// GetPostHeader ...
+func getParentOfFlr(flr PostHeader) (PostHeader, error) {
+	return GetPostHeader(strconv.FormatInt(flr.Parent, 10), flr.Flr)
 }

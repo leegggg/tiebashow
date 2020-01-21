@@ -1,0 +1,72 @@
+.threadlist_rep_num {
+    display: inline-block;
+    width: 50px;
+    height: 30px;
+    line-height: 26px;
+    margin-right: 20px;
+    text-align: center;
+    background: url(/static/img/f_reply_bg_89030dc.png) no-repeat
+}
+
+.threadlist_bright .threadlist_abs_onlyline, .threadlist_bright .threadlist_abs {
+    width: 460px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #666
+}
+
+.threadlist_title {
+    font-size: 1.1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: left;
+    background-color: #fff;
+}
+
+.threadlist_bright>div {
+    position: relative;
+    border-bottom: 1px dotted #e4e6eb
+}
+
+.threadlist_bright>div:hover {
+    background-color: #f7f9fc
+}
+
+.j_thread_list {
+    padding: 10px 0;
+    margin: 0 20px
+}
+
+.card_top_wrap {
+    background-color: #F2F4F7;
+    background-image: -moz-linear-gradient(top, #f5f7fa, #f2f4f7);
+    background-image: -webkit-linear-gradient(top, #f5f7fa, #f2f4f7);
+    background-image: -o-linear-gradient(top, #f5f7fa, #f2f4f7);
+    background-image: linear-gradient(top, #f5f7fa, #f2f4f7);
+    _background: #F2F4F7
+}
+
+.d_author {
+    background-color: #f7f9fc
+}
+
+.j_l_post {
+    padding: 10px 0;
+    margin: 0 20px
+}
+
+.l_post_bright {
+    position: relative;
+    border-bottom: 1px dotted #e4e6eb
+}

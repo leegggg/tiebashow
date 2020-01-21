@@ -29,6 +29,14 @@ func (PostHeader) TableName() string {
 	return "POST_HEADER"
 }
 
+// GetPostHeader ...
+func GetPostHeader(pid string, flr bool) (PostHeader, error) {
+	db := common.GetDB()
+	var postHeader PostHeader
+	err := db.Where(&PostHeader{Pid: &pid, Flr: flr}).First(&postHeader).Error
+	return postHeader, err
+}
+
 // GetPostHeaders ...
 func GetPostHeaders(pid string, pn int64, nb int64) ([]PostHeader, error) {
 	db := common.GetDB()

@@ -20,8 +20,7 @@ func main() {
 	defer db.Close()
 
 	r := gin.Default()
-	r.StaticFS("/js", http.Dir("./static/js/"))
-	r.StaticFS("/css", http.Dir("./static/css/"))
+	r.StaticFS("/static", http.Dir("./static/"))
 	r.StaticFile("/f", "./static/f.html")
 	r.StaticFile("/p", "./static/p.html")
 
