@@ -1,7 +1,11 @@
 package main
 
 import (
+	"encoding/json"
+	"io/ioutil"
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
@@ -15,7 +19,24 @@ var db *gorm.DB
 var err error
 
 func main() {
-	db := common.Init()
+	// Open our jsonFile
+	jsonFile, err := os.Open("config.json")
+	// if we os.Open returns an error then handle it
+	if err != nil {
+		log.Println(err)
+	}
+	log.Println("Successfully Opened users.json")
+	// defer the closing of our jsonFile so that we can parse it later on
+	defer jsonFile.Close()
+
+	jsonBlob, _ := ioutil.ReadAll(jsonFile)
+
+	var config interface{}
+	err = json.Unmarshal(jsonBlob, &config)
+
+	log.Println(config)
+
+	db := common.Init("./data/all.data.tieba.baidu.com.db")
 	// Migrate(db)
 	defer db.Close()
 
