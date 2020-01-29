@@ -1,0 +1,53 @@
+<html>
+
+<head>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/js/bootstrap.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.bootcss.com/vue-router/3.1.3/vue-router.js"></script>
+
+    <link href="/static/css/tieba.css" rel="stylesheet">
+</head>
+
+<body>
+    <div id="app" class="app">
+        <div class="header">
+            <div class="container  card_top_wrap">
+                <div class="jumbotron">
+                    <h1>离线贴吧</h1>
+                    <p>https://github.com/leegggg/tiebashow</p>
+                </div>
+            </div>
+        </div>
+        <div class="maincontainer">
+            <div id="thread_list" class="container threadlist_bright j_threadlist_bright">
+                <div>
+                    <span>服务状态：</span><span v-html="status.msg">OK</span>
+                </div>
+                <div>
+                    <span>数据库文件：</span><span class="monospaced" v-html="status.config.db_path"></span>
+                </div>
+                <div>
+                    <span>图片目录：</span><span class="monospaced" v-html="status.config.img_dir"></span>
+                </div>
+            </div>
+            <div id="kws" class="container threadlist_bright j_threadlist_bright">
+                <div class="row j_thread_list clearfix" v-for="item in status.kws">
+                    <a v-bind:href="'/f?kw=' + item">
+                        <div class="col-md-12 col2_left j_threadlist_li_left">
+                            <span class="center_text" v-html="item"></span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="container" class="thread_list_bottom clearfix">
+            </div>
+        </div>
+    </div>
+    <script src="/static/js/index.js"></script>
+</body>
+
+</html>

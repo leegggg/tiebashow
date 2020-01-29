@@ -8,6 +8,16 @@
     background: url(/static/img/f_reply_bg_89030dc.png) no-repeat
 }
 
+.monospaced{
+    font-family: "Lucida Console", Courier, monospace;
+}
+
+.baiduicon {
+    width: 100%;
+    height: 1em;
+    text-align: center;
+}
+
 .threadlist_bright .threadlist_abs_onlyline, .threadlist_bright .threadlist_abs {
     width: 460px;
     overflow: hidden;
@@ -86,3 +96,4 @@ body {
 .maincontainer {
     min-height:100rem;
 }
+

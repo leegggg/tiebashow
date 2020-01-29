@@ -1,6 +1,7 @@
 package threads
 
 import (
+	"log"
 	"time"
 
 	"github.com/leegggg/tiebashow/common"
@@ -73,6 +74,24 @@ func SearchThreadHeaders(kw string, pn int64, nb int64, query string) ([]ThreadH
 			Order("kz desc").Limit(nb).Offset(pn).Find(&threadHeaders).Error
 	}
 	return threadHeaders, err
+}
+
+// GetKws ...
+func GetKws() ([]string, error) {
+	db := common.GetDB()
+	var kws []string
+	var err error
+	rows, err := db.Table("THREAD_HEADER").Select("distinct kw").Rows()
+	var kw string
+	for rows.Next() {
+		err := rows.Scan(&kw)
+		if err != nil {
+			log.Fatal(err)
+			continue
+		}
+		kws = append(kws, kw)
+	}
+	return kws, err
 }
 
 // Thread ...

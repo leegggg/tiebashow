@@ -8,6 +8,7 @@
     <script src="https://cdn.bootcss.com/vue-router/3.1.3/vue-router.js"></script>
 
     <link href="/static/css/tieba.css" rel="stylesheet">
+    <link href="/static/css/loading.css" rel="stylesheet">
 </head>
 
 <body>
@@ -23,6 +24,22 @@
             </div>
         </div>
         <div class="maincontainer">
+            <div v-if="Object.keys(posts).length === 0 && posts.constructor === Object" id="loading" class="container">
+                <div class="lds-spinner">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </div>
             <div id="post_list" class="container">
                 <div v-for="post in posts" class="row l_post l_post_bright j_l_post clearfix" v-bind:data-pid="post.pid">
                     <div class="col-md-2 d_author">

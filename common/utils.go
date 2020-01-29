@@ -3,19 +3,22 @@ package common
 
 import (
 	"fmt"
+	"log"
 	"math/rand"
+	"os/exec"
+	"runtime"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 	"gopkg.in/go-playground/validator.v8"
 
-	"github.com/gin-gonic/gin/binding"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin/binding"
 )
 
 var letters = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 
-// A helper function to generate random string
+// RandString A helper function to generate random string
 func RandString(n int) string {
 	b := make([]rune, n)
 	for i := range b {
@@ -28,7 +31,7 @@ func RandString(n int) string {
 const NBSecretPassword = "A String Very Very Very Strong!!@##$!@#$"
 const NBRandomPassword = "A String Very Very Very Niubilty!!@##$!@#4"
 
-// A Util function to generate jwt_token which can be used in the request header
+// GenToken A Util function to generate jwt_token which can be used in the request header
 func GenToken(id uint) string {
 	jwt_token := jwt.New(jwt.GetSigningMethod("HS256"))
 	// Set some claims
@@ -41,13 +44,13 @@ func GenToken(id uint) string {
 	return token
 }
 
-// My own Error type that will help return my customized Error info
+// CommonError My own Error type that will help return my customized Error info
 //  {"database": {"hello":"no such table", error: "not_exists"}}
 type CommonError struct {
 	Errors map[string]interface{} `json:"errors"`
 }
 
-// To handle the error returned by c.Bind in gin framework
+// NewValidatorError To handle the error returned by c.Bind in gin framework
 // https://github.com/go-playground/validator/blob/v9/_examples/translations/main.go
 func NewValidatorError(err error) CommonError {
 	res := CommonError{}
@@ -66,7 +69,7 @@ func NewValidatorError(err error) CommonError {
 	return res
 }
 
-// Warp the error info in a object
+// NewError Warp the error info in a object
 func NewError(key string, err error) CommonError {
 	res := CommonError{}
 	res.Errors = make(map[string]interface{})
@@ -74,10 +77,30 @@ func NewError(key string, err error) CommonError {
 	return res
 }
 
-// Changed the c.MustBindWith() ->  c.ShouldBindWith().
+// Bind Changed the c.MustBindWith() ->  c.ShouldBindWith().
 // I don't want to auto return 400 when error happened.
 // origin function is here: https://github.com/gin-gonic/gin/blob/master/context.go
 func Bind(c *gin.Context, obj interface{}) error {
 	b := binding.Default(c.Request.Method, c.ContentType())
 	return c.ShouldBindWith(obj, b)
+}
+
+// Openbrowser ...
+func Openbrowser(url string) {
+	var err error
+
+	switch runtime.GOOS {
+	case "linux":
+		err = exec.Command("xdg-open", url).Start()
+	case "windows":
+		err = exec.Command("rundll32", "url.dll,FileProtocolHandler", url).Start()
+	case "darwin":
+		err = exec.Command("open", url).Start()
+	default:
+		err = fmt.Errorf("unsupported platform")
+	}
+	if err != nil {
+		log.Fatal(err)
+	}
+
 }
