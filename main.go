@@ -28,7 +28,7 @@ func main() {
 	// Migrate(db)
 	defer db.Close()
 
-	gin.SetMode(gin.ReleaseMode)
+	// gin.SetMode(gin.ReleaseMode)
 	r := gin.Default()
 	r.StaticFS("/static", http.Dir("./static/"))
 	r.StaticFile("/f", "./static/f.html")
