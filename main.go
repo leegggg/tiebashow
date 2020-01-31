@@ -49,6 +49,8 @@ func main() {
 		Handler: r,
 	}
 
+	common.Openbrowser("http://localhost:45678")
+
 	r.Run(":45678")
 
 	return
